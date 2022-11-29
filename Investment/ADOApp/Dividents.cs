@@ -12,12 +12,13 @@ namespace Investment.ADOApp
     using System;
     using System.Collections.Generic;
     
-    public partial class StockMarket
+    public partial class Dividents
     {
-        public int IdStockMarket { get; set; }
-        public Nullable<int> IdStock { get; set; }
-        public Nullable<int> LastTransaction { get; set; }
+        public int IdDividents { get; set; }
+        public Nullable<int> IdCompany { get; set; }
+        public Nullable<int> StockNeed { get; set; }
+        public Nullable<int> Payment { get; set; }
     
-        public virtual Stock Stock { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

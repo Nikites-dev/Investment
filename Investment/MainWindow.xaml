@@ -5,7 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Investment"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+
+        ResizeMode="NoResize"
+       
+        MaxHeight="1080"
+       
+        
+        WindowState="Maximized"
+        WindowStyle="ToolWindow"
+        
+        Title="MainWindow">
     <Grid>
         <Frame x:Name="MainFrame"/>
     </Grid>

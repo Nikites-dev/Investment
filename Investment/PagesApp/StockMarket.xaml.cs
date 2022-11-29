@@ -17,23 +17,14 @@ using Investment.ADOApp;
 namespace Investment.PagesApp
 {
     /// <summary>
-    /// Логика взаимодействия для UserMain.xaml
+    /// Interaction logic for StockMarket.xaml
     /// </summary>
-    public partial class UserMain : Page
+    public partial class StockMarket : Page
     {
-        public UserMain()
+        public StockMarket()
         {
             InitializeComponent();
-        }
-
-        public UserMain(User user)
-        {
-            InitializeComponent();
-        }
-
-        private void BtnStocks_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new StockMarket());
+            listTemplate.ItemsSource = App.Connection.Stock.ToList();
         }
     }
 }

@@ -12,27 +12,18 @@ namespace Investment.ADOApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Company
+    public partial class Sector
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Company()
+        public Sector()
         {
-            this.Dividents = new HashSet<Dividents>();
-            this.Stock = new HashSet<Stock>();
+            this.Company = new HashSet<Company>();
         }
     
-        public int IdCompany { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> NumberOfStocks { get; set; }
-        public byte[] ImageLogo { get; set; }
-        public Nullable<int> IdSector { get; set; }
-        public string ShortName { get; set; }
-        public string Info { get; set; }
+        public int IdSector { get; set; }
+        public string NameSector { get; set; }
     
-        public virtual Sector Sector { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Dividents> Dividents { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Stock> Stock { get; set; }
+        public virtual ICollection<Company> Company { get; set; }
     }
 }

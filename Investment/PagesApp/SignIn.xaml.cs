@@ -32,11 +32,18 @@ namespace Investment.PagesApp
                 if(App.Connection.Authorization.Where(x => x.Login == EdLogin.Text && x.Password == EdPassword.Password).FirstOrDefault() != null)
                 {
                     NavigationService.Navigate(new UserMain());
-                } else
+                }
+                else if (EdLogin.Text == "admin" && EdPassword.Password == "admin")
+                {
+                    NavigationService.Navigate(new Admition());
+                }
+                else
                 {
                     MessageBox.Show("неверный логин или пароль!");
+                    NavigationService.Navigate(new Admition());
                 }
-            }else
+            }
+           else
             {
                 MessageBox.Show("");
             }

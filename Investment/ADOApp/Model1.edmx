@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище InvestmentModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="InvestmentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Authorization">
           <Key>
             <PropertyRef Name="IdAuth" />
@@ -30,6 +30,25 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="NumberOfStocks" Type="int" />
           <Property Name="ImageLogo" Type="image" />
+          <Property Name="IdSector" Type="int" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Info" Type="nvarchar" MaxLength="450" />
+        </EntityType>
+        <EntityType Name="Dividents">
+          <Key>
+            <PropertyRef Name="IdDividents" />
+          </Key>
+          <Property Name="IdDividents" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCompany" Type="int" />
+          <Property Name="StockNeed" Type="int" />
+          <Property Name="Payment" Type="int" />
+        </EntityType>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="IdSector" />
+          </Key>
+          <Property Name="IdSector" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameSector" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -101,6 +120,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Company_Sector">
+          <End Role="Sector" Type="Self.Sector" Multiplicity="0..1" />
+          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="IdSector" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="IdSector" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dividents_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Dividents" Type="Self.Dividents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="IdCompany" />
+            </Principal>
+            <Dependent Role="Dividents">
+              <PropertyRef Name="IdCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Stock_Company">
           <End Role="Company" Type="Self.Company" Multiplicity="1" />
           <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
@@ -125,10 +168,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище InvestmentModelContainer">
+        <EntityContainer Name="InvestmentModelStoreContainer">
           <EntitySet Name="Authorization" EntityType="Self.Authorization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BrokerageAccount" EntityType="Self.BrokerageAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dividents" EntityType="Self.Dividents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockMarket" EntityType="Self.StockMarket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -145,6 +190,14 @@
             <End Role="User" EntitySet="User" />
             <End Role="BrokerageAccount" EntitySet="BrokerageAccount" />
           </AssociationSet>
+          <AssociationSet Name="FK_Company_Sector" Association="Self.FK_Company_Sector">
+            <End Role="Sector" EntitySet="Sector" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dividents_Company" Association="Self.FK_Dividents_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Dividents" EntitySet="Dividents" />
+          </AssociationSet>
           <AssociationSet Name="FK_Stock_Company" Association="Self.FK_Stock_Company">
             <End Role="Company" EntitySet="Company" />
             <End Role="Stock" EntitySet="Stock" />
@@ -158,10 +211,11 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InvestmentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="InvestmentEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="InvestmentEntities" annotation:LazyLoadingEnabled="true" >
           <EntitySet Name="Authorization" EntityType="InvestmentModel.Authorization" />
           <EntitySet Name="BrokerageAccount" EntityType="InvestmentModel.BrokerageAccount" />
-          <EntitySet Name="Company" EntityType="InvestmentModel.Company" />
+          <EntitySet Name="Dividents" EntityType="InvestmentModel.Dividents" />
+          <EntitySet Name="Sector" EntityType="InvestmentModel.Sector" />
           <EntitySet Name="Stock" EntityType="InvestmentModel.Stock" />
           <EntitySet Name="StockMarket" EntityType="InvestmentModel.StockMarket" />
           <EntitySet Name="sysdiagrams" EntityType="InvestmentModel.sysdiagrams" />
@@ -178,13 +232,22 @@
             <End Role="User" EntitySet="User" />
             <End Role="BrokerageAccount" EntitySet="BrokerageAccount" />
           </AssociationSet>
-          <AssociationSet Name="FK_Stock_Company" Association="InvestmentModel.FK_Stock_Company">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="Stock" EntitySet="Stock" />
-          </AssociationSet>
           <AssociationSet Name="FK_StockMarket_Stock" Association="InvestmentModel.FK_StockMarket_Stock">
             <End Role="Stock" EntitySet="Stock" />
             <End Role="StockMarket" EntitySet="StockMarket" />
+          </AssociationSet>
+          <EntitySet Name="Company" EntityType="InvestmentModel.Company" />
+          <AssociationSet Name="FK_Company_Sector" Association="InvestmentModel.FK_Company_Sector">
+            <End Role="Sector" EntitySet="Sector" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dividents_Company" Association="InvestmentModel.FK_Dividents_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Dividents" EntitySet="Dividents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Company" Association="InvestmentModel.FK_Stock_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Stock" EntitySet="Stock" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Authorization">
@@ -207,15 +270,23 @@
           <NavigationProperty Name="Stock" Relationship="InvestmentModel.FK_BrokerageAccount_Stock" FromRole="BrokerageAccount" ToRole="Stock" />
           <NavigationProperty Name="User" Relationship="InvestmentModel.FK_BrokerageAccount_User" FromRole="BrokerageAccount" ToRole="User" />
         </EntityType>
-        <EntityType Name="Company">
+        <EntityType Name="Dividents">
           <Key>
-            <PropertyRef Name="IdCompany" />
+            <PropertyRef Name="IdDividents" />
           </Key>
-          <Property Name="IdCompany" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NumberOfStocks" Type="Int32" />
-          <Property Name="ImageLogo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Stock" Relationship="InvestmentModel.FK_Stock_Company" FromRole="Company" ToRole="Stock" />
+          <Property Name="IdDividents" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCompany" Type="Int32" />
+          <Property Name="StockNeed" Type="Int32" />
+          <Property Name="Payment" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="InvestmentModel.FK_Dividents_Company" FromRole="Dividents" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="IdSector" />
+          </Key>
+          <Property Name="IdSector" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameSector" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Company" Relationship="InvestmentModel.FK_Company_Sector" FromRole="Sector" ToRole="Company" />
         </EntityType>
         <EntityType Name="Stock">
           <Key>
@@ -225,8 +296,8 @@
           <Property Name="IdCompany" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BrokerageAccount" Relationship="InvestmentModel.FK_BrokerageAccount_Stock" FromRole="Stock" ToRole="BrokerageAccount" />
-          <NavigationProperty Name="Company" Relationship="InvestmentModel.FK_Stock_Company" FromRole="Stock" ToRole="Company" />
           <NavigationProperty Name="StockMarket" Relationship="InvestmentModel.FK_StockMarket_Stock" FromRole="Stock" ToRole="StockMarket" />
+          <NavigationProperty Name="Company" Relationship="InvestmentModel.FK_Stock_Company" FromRole="Stock" ToRole="Company" />
         </EntityType>
         <EntityType Name="StockMarket">
           <Key>
@@ -293,18 +364,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Stock_Company">
-          <End Type="InvestmentModel.Company" Role="Company" Multiplicity="1" />
-          <End Type="InvestmentModel.Stock" Role="Stock" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="IdCompany" />
-            </Principal>
-            <Dependent Role="Stock">
-              <PropertyRef Name="IdCompany" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StockMarket_Stock">
           <End Type="InvestmentModel.Stock" Role="Stock" Multiplicity="0..1" />
           <End Type="InvestmentModel.StockMarket" Role="StockMarket" Multiplicity="*" />
@@ -317,12 +376,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="IdCompany" />
+          </Key>
+          <Property Name="IdCompany" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfStocks" Type="Int32" />
+          <Property Name="ImageLogo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IdSector" Type="Int32" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Info" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sector" Relationship="InvestmentModel.FK_Company_Sector" FromRole="Company" ToRole="Sector" />
+          <NavigationProperty Name="Dividents" Relationship="InvestmentModel.FK_Dividents_Company" FromRole="Company" ToRole="Dividents" />
+          <NavigationProperty Name="Stock" Relationship="InvestmentModel.FK_Stock_Company" FromRole="Company" ToRole="Stock" />
+        </EntityType>
+        <Association Name="FK_Company_Sector">
+          <End Type="InvestmentModel.Sector" Role="Sector" Multiplicity="0..1" />
+          <End Type="InvestmentModel.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="IdSector" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="IdSector" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dividents_Company">
+          <End Type="InvestmentModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="InvestmentModel.Dividents" Role="Dividents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="IdCompany" />
+            </Principal>
+            <Dependent Role="Dividents">
+              <PropertyRef Name="IdCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Company">
+          <End Type="InvestmentModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="InvestmentModel.Stock" Role="Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="IdCompany" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="IdCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище InvestmentModelContainer" CdmEntityContainer="InvestmentEntities">
+        <EntityContainerMapping StorageEntityContainer="InvestmentModelStoreContainer" CdmEntityContainer="InvestmentEntities" >
           <EntitySetMapping Name="Authorization">
             <EntityTypeMapping TypeName="InvestmentModel.Authorization">
               <MappingFragment StoreEntitySet="Authorization">
@@ -342,13 +452,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Company">
-            <EntityTypeMapping TypeName="InvestmentModel.Company">
-              <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="ImageLogo" ColumnName="ImageLogo" />
-                <ScalarProperty Name="NumberOfStocks" ColumnName="NumberOfStocks" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+          <EntitySetMapping Name="Dividents">
+            <EntityTypeMapping TypeName="InvestmentModel.Dividents">
+              <MappingFragment StoreEntitySet="Dividents">
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="StockNeed" ColumnName="StockNeed" />
                 <ScalarProperty Name="IdCompany" ColumnName="IdCompany" />
+                <ScalarProperty Name="IdDividents" ColumnName="IdDividents" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sector">
+            <EntityTypeMapping TypeName="InvestmentModel.Sector">
+              <MappingFragment StoreEntitySet="Sector">
+                <ScalarProperty Name="NameSector" ColumnName="NameSector" />
+                <ScalarProperty Name="IdSector" ColumnName="IdSector" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -390,6 +508,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Company">
+            <EntityTypeMapping TypeName="InvestmentModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="IdSector" ColumnName="IdSector" />
+                <ScalarProperty Name="ImageLogo" ColumnName="ImageLogo" />
+                <ScalarProperty Name="NumberOfStocks" ColumnName="NumberOfStocks" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdCompany" ColumnName="IdCompany" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -407,7 +538,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

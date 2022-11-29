@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aeb851713443477f81b71df6ce301982" Name="Diagram1" ZoomLevel="74" >
+        <EntityTypeShape EntityType="InvestmentModel.Authorization" Width="1.5" PointX="7.5" PointY="11.125" />
+        <EntityTypeShape EntityType="InvestmentModel.BrokerageAccount" Width="1.5" PointX="7.5" PointY="5.125" />
+        <EntityTypeShape EntityType="InvestmentModel.Dividents" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="InvestmentModel.Sector" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="InvestmentModel.Stock" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="InvestmentModel.StockMarket" Width="1.5" PointX="7.5" PointY="8" />
+        <EntityTypeShape EntityType="InvestmentModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InvestmentModel.User" Width="1.5" PointX="5.25" PointY="8.125" />
+        <AssociationConnector Association="InvestmentModel.FK_Authorization_User" />
+        <AssociationConnector Association="InvestmentModel.FK_BrokerageAccount_Stock" />
+        <AssociationConnector Association="InvestmentModel.FK_BrokerageAccount_User" />
+        <AssociationConnector Association="InvestmentModel.FK_StockMarket_Stock" />
+        <EntityTypeShape EntityType="InvestmentModel.Company" Width="1.5" PointX="3" PointY="3.375" />
+        <AssociationConnector Association="InvestmentModel.FK_Company_Sector" />
+        <AssociationConnector Association="InvestmentModel.FK_Dividents_Company" />
+        <AssociationConnector Association="InvestmentModel.FK_Stock_Company" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

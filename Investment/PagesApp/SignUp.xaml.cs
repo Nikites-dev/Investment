@@ -23,7 +23,10 @@ namespace Investment.PagesApp
     {
         public SignUp()
         {
+         
             InitializeComponent();
+
+       
         }
 
         private void BtnSignUp_Click(object sender, RoutedEventArgs e)
