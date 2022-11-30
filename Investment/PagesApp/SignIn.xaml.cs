@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Investment.ADOApp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +30,14 @@ namespace Investment.PagesApp
         {
             if(EdLogin.Text != "" && EdPassword.Password != "")
             {
-                if(App.Connection.Authorization.Where(x => x.Login == EdLogin.Text && x.Password == EdPassword.Password).FirstOrDefault() != null)
+                Authorization auth = App.Connection.Authorization.Where(x => x.Login == EdLogin.Text && x.Password == EdPassword.Password).FirstOrDefault();
+
+                if (auth != null)
                 {
-                    NavigationService.Navigate(new UserMain());
+
+                    User user = auth.User;
+
+                    NavigationService.Navigate(new UserMain(user));
                 }
                 else if (EdLogin.Text == "admin" && EdPassword.Password == "admin")
                 {

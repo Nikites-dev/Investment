@@ -53,7 +53,7 @@
 
         <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="0, 30, 0, 0">
             <StackPanel>
-                <ListView x:Name="listTemplate">
+                <ListView x:Name="listTemplate" SelectionChanged="listTemplate_Selected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Background="#DADFE4" Width="1300" Margin="0, 3, 0, 3">

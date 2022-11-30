@@ -16,15 +16,34 @@ using Investment.ADOApp;
 
 namespace Investment.PagesApp
 {
-    /// <summary>
-    /// Interaction logic for StockMarket.xaml
-    /// </summary>
     public partial class StockMarket : Page
     {
+  
+        public User UserCurrent { get; set; }
+
         public StockMarket()
         {
             InitializeComponent();
             listTemplate.ItemsSource = App.Connection.Stock.ToList();
+        }
+
+        public StockMarket(User user)
+        {
+            InitializeComponent();
+            listTemplate.ItemsSource = App.Connection.Stock.ToList();
+            UserCurrent = user;
+        }
+
+        private void listTemplate_Selected(object sender, RoutedEventArgs e)
+        {
+            Stock stock = listTemplate.SelectedItem as Stock;
+
+            //MessageBox.Show(stock.Price.ToString());
+
+            StockPerson stockPerson = new StockPerson(stock, UserCurrent);
+            stockPerson.Show();
+
+
         }
     }
 }

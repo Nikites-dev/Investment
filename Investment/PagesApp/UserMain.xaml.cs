@@ -16,11 +16,10 @@ using Investment.ADOApp;
 
 namespace Investment.PagesApp
 {
-    /// <summary>
-    /// Логика взаимодействия для UserMain.xaml
-    /// </summary>
     public partial class UserMain : Page
     {
+        public User UserCurrent { get; set; }
+
         public UserMain()
         {
             InitializeComponent();
@@ -29,11 +28,12 @@ namespace Investment.PagesApp
         public UserMain(User user)
         {
             InitializeComponent();
+            UserCurrent = user;
         }
 
         private void BtnStocks_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new StockMarket());
+            NavigationService.Navigate(new StockMarket(UserCurrent));
         }
     }
 }

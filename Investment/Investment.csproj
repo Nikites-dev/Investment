@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
@@ -134,6 +135,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PagesApp\StockPerson.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PagesApp\UserMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,6 +156,9 @@
     </Compile>
     <Compile Include="PagesApp\StockMarket.xaml.cs">
       <DependentUpon>StockMarket.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesApp\StockPerson.xaml.cs">
+      <DependentUpon>StockPerson.xaml</DependentUpon>
     </Compile>
     <Compile Include="PagesApp\UserMain.xaml.cs">
       <DependentUpon>UserMain.xaml</DependentUpon>
