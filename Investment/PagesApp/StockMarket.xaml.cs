@@ -38,12 +38,13 @@ namespace Investment.PagesApp
         {
             Stock stock = listTemplate.SelectedItem as Stock;
 
-            //MessageBox.Show(stock.Price.ToString());
-
             StockPerson stockPerson = new StockPerson(stock, UserCurrent);
             stockPerson.Show();
+        }
 
-
+        private void BtnMain_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new UserMain(UserCurrent));
         }
     }
 }

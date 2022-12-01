@@ -49,6 +49,30 @@ namespace Investment.PagesApp
             MemoryStream stream = new MemoryStream(StockCurrent.Company.ImageLogo);
             ImageLogo.Source = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
 
+            BrokerageAccount brokerage = null;
+
+            try
+            {
+                brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
+            } catch (Exception ex)
+            {
+                
+            }
+           
+
+            if(brokerage == null)
+            {
+                TxtCountInPortfel.Text = "0 шт.";
+                TxtPriceInPortfel.Text = "0 р.";
+                TxtProcentInPortfel.Text = "0 ";
+            }else
+            {
+                int sumStocks = (int)(brokerage.Stock.Price * brokerage.Count);
+        
+                TxtCountInPortfel.Text = $"{brokerage.Count} шт.";
+                TxtPriceInPortfel.Text = $"{sumStocks} р.";
+                TxtProcentInPortfel.Text = " ";
+            }
         }
 
 
@@ -56,6 +80,82 @@ namespace Investment.PagesApp
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Button_Buy(object sender, RoutedEventArgs e)
+        {
+            int n;
+            bool isNumeric = int.TryParse(EdAmount.Text, out n);
+
+            if (isNumeric)
+            {
+                var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
+          
+                if(int.Parse(EdAmount.Text) * StockCurrent.Price <= UserCurrent.Balance)
+                {
+                    UserCurrent.Balance -= int.Parse(EdAmount.Text) * StockCurrent.Price;
+
+                    if (brokerage == null)
+                    {
+                        BrokerageAccount newBrokerAcc = new BrokerageAccount();
+                        newBrokerAcc.IdUser = UserCurrent.IdUser;
+                        newBrokerAcc.IdStock = StockCurrent.IdStock;
+                        newBrokerAcc.Count = int.Parse(EdAmount.Text);
+
+                        App.Connection.BrokerageAccount.Add(newBrokerAcc);
+                    }
+                    else
+                    {
+                        brokerage.Count += int.Parse(EdAmount.Text);
+                    }
+                    App.Connection.SaveChanges();
+                    SetData();
+                    MessageBox.Show("SUCCES!");
+                } 
+                else
+                {
+                    MessageBox.Show("Недостаточно средств!");
+                }
+
+            } else
+            {
+                MessageBox.Show("НЕ Число");
+            }
+        }
+
+        private void Button_Sell(object sender, RoutedEventArgs e)
+        {
+            int n;
+            bool isNumeric = int.TryParse(EdAmount.Text, out n);
+
+            if (isNumeric)
+            {
+                var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
+
+              
+
+                if (brokerage != null)
+                {
+                    if (int.Parse(EdAmount.Text) <= brokerage.Count)
+                    {
+                        UserCurrent.Balance += int.Parse(EdAmount.Text) * StockCurrent.Price;
+
+                        brokerage.Count -= int.Parse(EdAmount.Text);
+
+                        MessageBox.Show("SUCCES!");
+                    }
+                }
+                else
+                {
+                    brokerage.Count += int.Parse(EdAmount.Text);
+                }
+                App.Connection.SaveChanges();
+                SetData();
+            }
+            else
+            {
+                MessageBox.Show("НЕ Число");
+            }
         }
     }
 }

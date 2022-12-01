@@ -69,8 +69,8 @@
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="340, 0, 0 ,0">
                         <TextBox x:Name="EdAmount" Text="1" Width="100"  Height="50" TextAlignment="Center" FontSize="18" Padding="10"/>
-                        <Button Content="Купить" Margin="10, 0, 10, 0" Width="120" Height="50" FontSize="16"/>
-                        <Button Content="продать" Margin="10, 0, 10, 0" Width="120" Height="50" FontSize="16"/>
+                        <Button Content="Купить" Margin="10, 0, 10, 0" Width="120" Height="50" FontSize="16" Click="Button_Buy"/>
+                        <Button Content="Продать" Margin="10, 0, 10, 0" Width="120" Height="50" FontSize="16" Click="Button_Sell"/>
                     </StackPanel>
 
                 </StackPanel>
@@ -95,7 +95,7 @@
                             <StackPanel Margin="70, 0, 0, 0">
                                 <TextBlock Text="Стоимость бумаг" FontSize="13"/>
 
-                                <StackPanel Orientation="Horizontal" Margin="0, 10, 0, 18">
+                                <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 18">
                                     <TextBlock x:Name="TxtPriceInPortfel" Text="141,00 р." FontSize="18" FontWeight="Bold"/>
                                     <TextBlock x:Name="TxtProcentInPortfel" Text="-6,46 (4, 37%)" FontSize="18" Margin="10, 0, 0, 0" FontWeight="Bold"/>
                                 </StackPanel>

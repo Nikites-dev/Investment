@@ -29,6 +29,16 @@
             <TextBlock Text="Каталог акций" FontSize="40"/>
         </StackPanel>
 
+        <StackPanel
+            Orientation="Horizontal"
+            Height="30"
+            HorizontalAlignment="Right"
+            Grid.Column="1"
+            VerticalAlignment="Center"
+            >
+            <Button x:Name="BtnMain" Content="Main" Margin="30, 0,30,0" Padding="30, 0, 30, 0" Click="BtnMain_Click"></Button>
+            <Button x:Name="BtnStocks" Content="Stocks"  Margin="30, 0,30,0" Padding="30, 0, 30, 0"></Button>
+        </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1" Height="30" VerticalAlignment="Top" Orientation="Horizontal" Background="#C7CBD0" Width="1300" Margin="-65, 3, 0, 3">
 

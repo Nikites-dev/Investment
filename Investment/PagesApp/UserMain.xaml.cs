@@ -23,17 +23,67 @@ namespace Investment.PagesApp
         public UserMain()
         {
             InitializeComponent();
+            SetData();
+
+            listTemplate.ItemsSource = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
         }
 
         public UserMain(User user)
         {
             InitializeComponent();
             UserCurrent = user;
+            SetData();
+
+            List<BrokerageAccount> listStock = new List<BrokerageAccount>();
+            var listStockDB = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
+
+            foreach (var item in listStockDB)
+            {
+                if(item.Count != 0)
+                {
+                    listStock.Add(item);
+                }
+            }
+            listTemplate.ItemsSource = listStock;
+        
         }
 
         private void BtnStocks_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new StockMarket(UserCurrent));
+        }
+
+        public void SetData()
+        {
+            TxtBalance.Text = UserCurrent.Balance.ToString();
+
+            var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
+
+            if(brokerage != null)
+            {
+                int sumStocks = 0;
+
+                foreach (var stock in brokerage)
+                {
+                    sumStocks += (int)(stock.Stock.Price * stock.Count);
+                }
+
+                TxtBank.Text = (UserCurrent.Balance + sumStocks).ToString();
+            } else
+            {
+                TxtBank.Text = UserCurrent.Balance.ToString();
+            }
+
+            
+
+        }
+
+        private void listTemplate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BrokerageAccount brokerAcc = listTemplate.SelectedItem as BrokerageAccount;
+
+            StockPerson stockPerson = new StockPerson(brokerAcc.Stock, UserCurrent);
+            stockPerson.Show();
         }
     }
 }

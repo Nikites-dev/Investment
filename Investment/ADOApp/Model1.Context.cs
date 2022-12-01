@@ -27,12 +27,12 @@ namespace Investment.ADOApp
     
         public virtual DbSet<Authorization> Authorization { get; set; }
         public virtual DbSet<BrokerageAccount> BrokerageAccount { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Dividents> Dividents { get; set; }
         public virtual DbSet<Sector> Sector { get; set; }
         public virtual DbSet<Stock> Stock { get; set; }
         public virtual DbSet<StockMarket> StockMarket { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<Company> Company { get; set; }
     }
 }

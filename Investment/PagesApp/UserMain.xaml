@@ -17,23 +17,21 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="7*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock
-            Text="Брокерский счет"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Grid.Column="1"
-            FontSize="40"
-          />
+
+
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Text="Брокерский счет" FontSize="40"/>
+        </StackPanel>
 
         <StackPanel
             Orientation="Horizontal"
@@ -50,24 +48,80 @@
             <StackPanel Orientation="Horizontal">
 
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Баланс"/>
-                    <TextBlock Text="10 000 р"/>
+                    <TextBlock Text="Баланс" FontSize="16"/>
+                    <TextBlock x:Name="TxtBalance" FontSize="20" FontWeight="Bold"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="200, 0, 0, 0">
+                    <TextBlock Text="Всего средств" FontSize="16"/>
+                    <TextBlock x:Name="TxtBank"  FontSize="20" FontWeight="Bold"/>
                 </StackPanel>
 
                 <StackPanel Margin="500, 0, 0, 0">
-                    <TextBlock  Text="За все время:"/>
-                    <TextBlock Text="-4 703,00 р (8,94%)"/>
+                    <TextBlock  Text="За все время:" FontSize="16"/>
+                    <TextBlock x:Name="TxtProfit"   FontSize="20" FontWeight="Bold"/>
                 </StackPanel>
-                
-               
-                
-               
+
             </StackPanel>
-            <ScrollViewer Grid.Row="1" Grid.Column="1" Height="750" Margin="0, 50, 0, 0" Background="LightBlue">
+
+
+
+
+
+            <StackPanel Grid.Row="1" Grid.Column="1"  Height="30" Orientation="Horizontal" Background="#C7CBD0" Width="1350" Margin="-20, 50, 0, 3">
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Logo" Width="70" FontSize="15" Padding="25 , 0, 0, 0"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center" Width="300"   Margin="20 , 0, 0, 0">
+                    <TextBlock Text="Short name" FontSize="15"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="600">
+                    <TextBlock Text="Price" FontSize="15" TextAlignment="Right"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center"  Margin="10, 0, 0,0" Width="150">
+                    <TextBlock Text="Price in %" FontSize="15" TextAlignment="Right"/>
+                </StackPanel>
+
+            </StackPanel>
+
+
+
+            <ScrollViewer Grid.Row="1" Grid.Column="1" Height="750" Margin="0, 0, 0, 0" Background="LightBlue">
+                <StackPanel>
+                    <ListView x:Name="listTemplate" SelectionChanged="listTemplate_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="#DADFE4" Width="1300" Margin="0, 3, 0, 3">
+                                    <StackPanel>
+                                        <Image Source="{Binding Stock.Company.ImageLogo}" Width="70" Margin="5"/>
+                                    </StackPanel>
+
+                                    <StackPanel VerticalAlignment="Bottom" Width="300"   Margin="20 , 0, 0, 0">
+                                        <TextBlock Text="{Binding Stock.Company.Name}" FontSize="17"/>
+                                        <TextBlock Text="{Binding Stock.Company.ShortName}" FontSize="12" Margin="0, 2, 0, 8"/>
+                                    </StackPanel>
+
+                                    <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="600">
+                                        <TextBlock Text="{Binding Stock.Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                    </StackPanel>
+
+                                    <StackPanel VerticalAlignment="Center"  Margin="10, 0, 0,0" Width="150">
+                                        <TextBlock Text="51,38%" FontSize="15" TextAlignment="Right"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
             </ScrollViewer>
         </StackPanel>
-        
-        
-        
+
+
+
     </Grid>
 </Page>

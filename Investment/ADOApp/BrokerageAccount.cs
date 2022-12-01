@@ -17,6 +17,7 @@ namespace Investment.ADOApp
         public int IdBrokerage { get; set; }
         public int IdUser { get; set; }
         public Nullable<int> IdStock { get; set; }
+        public Nullable<int> Count { get; set; }
     
         public virtual Stock Stock { get; set; }
         public virtual User User { get; set; }
