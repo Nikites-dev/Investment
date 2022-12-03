@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Investment.ADOApp;
 
 
@@ -52,7 +53,15 @@ namespace Investment.Models
 
 
                 App.Connection.StockMarket.Add(stockMarket);
-                App.Connection.SaveChanges();
+
+                try
+                {
+                    App.Connection.SaveChanges();
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+              
             }
         }
 

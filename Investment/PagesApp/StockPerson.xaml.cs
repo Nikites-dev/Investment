@@ -146,6 +146,11 @@ namespace Investment.PagesApp
 
                         MessageBox.Show("SUCCES!");
                     }
+
+                    if(brokerage.Count == 0)
+                    {
+                        brokerage.Amount = 0;
+                    }
                 }
                 else
                 {

@@ -25,12 +25,15 @@ namespace Investment
     /// </summary>
     public partial class MainWindow : Window
     {
+      
 
         private static Random random = new Random();
 
         public MainWindow()
         {
             InitializeComponent();
+
+ 
 
             MainFrame.NavigationService.Navigate(new SignUp());
 

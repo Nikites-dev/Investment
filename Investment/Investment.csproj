@@ -145,6 +145,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Profit.cs" />
     <Compile Include="Models\StockExchange.cs" />
     <Compile Include="PagesApp\Admition.xaml.cs">
       <DependentUpon>Admition.xaml</DependentUpon>
