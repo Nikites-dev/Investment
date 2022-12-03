@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Investment.ADOApp;
 using Investment.PagesApp;
+using Investment.Models;
+using static System.Net.Mime.MediaTypeNames;
+using System.Threading;
 
 namespace Investment
 {
@@ -22,11 +25,26 @@ namespace Investment
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private static Random random = new Random();
+
         public MainWindow()
         {
             InitializeComponent();
 
             MainFrame.NavigationService.Navigate(new SignUp());
+
+            Thread thread = new Thread(Next) { IsBackground = true };
+            thread.Start();
+        }
+
+        public void Next()
+        {
+            while (true)
+            {
+                StockExchange.StockMarketAnalytics(random);
+                Thread.Sleep(10000);
+            }
         }
     }
 }

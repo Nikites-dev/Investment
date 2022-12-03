@@ -78,8 +78,8 @@ namespace Investment.PagesApp
 
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+        {       
+          this.Close();
         }
 
         private void Button_Buy(object sender, RoutedEventArgs e)
@@ -101,12 +101,13 @@ namespace Investment.PagesApp
                         newBrokerAcc.IdUser = UserCurrent.IdUser;
                         newBrokerAcc.IdStock = StockCurrent.IdStock;
                         newBrokerAcc.Count = int.Parse(EdAmount.Text);
-
+                        newBrokerAcc.Amount = int.Parse(EdAmount.Text) * StockCurrent.Price;
                         App.Connection.BrokerageAccount.Add(newBrokerAcc);
                     }
                     else
                     {
                         brokerage.Count += int.Parse(EdAmount.Text);
+                        brokerage.Amount += int.Parse(EdAmount.Text) * StockCurrent.Price;
                     }
                     App.Connection.SaveChanges();
                     SetData();
@@ -141,6 +142,7 @@ namespace Investment.PagesApp
                         UserCurrent.Balance += int.Parse(EdAmount.Text) * StockCurrent.Price;
 
                         brokerage.Count -= int.Parse(EdAmount.Text);
+                        brokerage.Amount -= int.Parse(EdAmount.Text) * StockCurrent.Price;
 
                         MessageBox.Show("SUCCES!");
                     }

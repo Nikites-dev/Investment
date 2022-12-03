@@ -16,18 +16,18 @@ using Investment.ADOApp;
 
 namespace Investment.PagesApp
 {
-    public partial class StockMarket : Page
+    public partial class StockMarketPage : Page
     {
   
         public User UserCurrent { get; set; }
 
-        public StockMarket()
+        public StockMarketPage()
         {
             InitializeComponent();
             listTemplate.ItemsSource = App.Connection.Stock.ToList();
         }
 
-        public StockMarket(User user)
+        public StockMarketPage(User user)
         {
             InitializeComponent();
             listTemplate.ItemsSource = App.Connection.Stock.ToList();

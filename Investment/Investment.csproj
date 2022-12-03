@@ -105,6 +105,9 @@
     <Compile Include="ADOApp\StockMarket.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ADOApp\sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="ADOApp\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -128,7 +131,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PagesApp\StockMarket.xaml">
+    <Page Include="PagesApp\StockMarketPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,8 +155,8 @@
     <Compile Include="PagesApp\SignUp.xaml.cs">
       <DependentUpon>SignUp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PagesApp\StockMarket.xaml.cs">
-      <DependentUpon>StockMarket.xaml</DependentUpon>
+    <Compile Include="PagesApp\StockMarketPage.xaml.cs">
+      <DependentUpon>StockMarketPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PagesApp\StockPerson.xaml.cs">
       <DependentUpon>StockPerson.xaml</DependentUpon>
@@ -194,10 +197,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="ADOApp\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -209,6 +208,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

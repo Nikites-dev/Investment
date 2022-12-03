@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,23 +35,61 @@ namespace Investment.PagesApp
             UserCurrent = user;
             SetData();
 
-            List<BrokerageAccount> listStock = new List<BrokerageAccount>();
-            var listStockDB = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
+          
 
-            foreach (var item in listStockDB)
-            {
-                if(item.Count != 0)
-                {
-                    listStock.Add(item);
-                }
-            }
-            listTemplate.ItemsSource = listStock;
+
+            Thread thread = new Thread(SetLoopData) { IsBackground = true };
+            thread.Start();
         
+        }
+
+        public void SetLoopData()
+        {
+
+            while(true)
+            {
+                List<StockMarket> stockMarkets = App.Connection.StockMarket.ToList();
+                List<Stock> listStocks = App.Connection.Stock.ToList();
+
+
+
+
+                List<BrokerageAccount> listStock = new List<BrokerageAccount>();
+                var listStockDB = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
+
+           
+
+
+                foreach (var item in listStockDB)
+                {
+                    if (item.Count != 0)
+                    {
+                        listStock.Add(item);
+                    }
+                }
+               
+
+                Dispatcher.Invoke(() => listTemplate.ItemsSource = listStock);
+
+
+
+
+
+                Thread.Sleep(10000);
+
+                //foreach (var stock in listStocks)
+                //{
+                
+                //    var lastStock = App.Connection.StockMarket.Where(x => x.IdStock == stock.IdStock).ToList().LastOrDefault();
+                //    Thread.Sleep(10000);
+                //}
+            }
+            
         }
 
         private void BtnStocks_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new StockMarket(UserCurrent));
+            NavigationService.Navigate(new StockMarketPage(UserCurrent));
         }
 
         public void SetData()
@@ -73,17 +112,22 @@ namespace Investment.PagesApp
             {
                 TxtBank.Text = UserCurrent.Balance.ToString();
             }
-
-            
-
         }
 
         private void listTemplate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BrokerageAccount brokerAcc = listTemplate.SelectedItem as BrokerageAccount;
 
-            StockPerson stockPerson = new StockPerson(brokerAcc.Stock, UserCurrent);
-            stockPerson.Show();
+            try
+            {
+                StockPerson stockPerson = new StockPerson(brokerAcc.Stock, UserCurrent);
+                stockPerson.Show();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }

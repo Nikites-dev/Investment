@@ -11,6 +11,6 @@ namespace Investment
 {
     public partial class App : Application
     {
-        public static InvestmentEntities1 Connection = new InvestmentEntities1();
+        public static InvestmentEntities Connection = new InvestmentEntities();
     }
 }
