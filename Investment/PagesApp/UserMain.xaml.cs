@@ -54,39 +54,43 @@ namespace Investment.PagesApp
 
             while(true)
             {
-                List<Stock> listStocks = App.Connection.Stock.ToList();
-
-                List<BrokerageAccount> listStock = new List<BrokerageAccount>();
-                var listStockDB = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
-
-                foreach (var item in listStockDB)
-                {
-                    if (item.Count != 0)
-                    {
-                        listStock.Add(item);
-                    }
-                }
-
-                Dispatcher.Invoke(() => listTemplate.ItemsSource = listStock);
                 try
                 {
-                    Dispatcher.Invoke(() => listTemplate2.ItemsSource = CalculateProfit());
-                } catch(Exception ex)
+                    List<BrokerageAccount> listStock = new List<BrokerageAccount>();
+                    var listStockDB = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
+
+                    foreach (var item in listStockDB)
+                    {
+                        if (item.Count != 0)
+                        {
+                            listStock.Add(item);
+                        }
+                    }
+
+                    Dispatcher.Invoke(() => listTemplate.ItemsSource = listStock);
+                    try
+                    {
+                        Dispatcher.Invoke(() => listTemplate2.ItemsSource = CalculateProfit());
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+
+                    Dispatcher.Invoke(() => SetData());
+
+                    Thread.Sleep(10000);
+                }catch(Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
-                
-                Dispatcher.Invoke(() => SetData());
-
-                Thread.Sleep(10000);
-            }
+                } 
         }
 
         public List<Profit> CalculateProfit()
         {
             if (App.Connection != null)
             {
-                List<Stock> listStocks = App.Connection.Stock.ToList();
                 var listStockDB = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
 
                 List<Profit> listProfits = new List<Profit>();

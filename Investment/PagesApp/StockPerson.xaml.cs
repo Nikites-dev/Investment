@@ -95,6 +95,12 @@ namespace Investment.PagesApp
                 {
                     UserCurrent.Balance -= int.Parse(EdAmount.Text) * StockCurrent.Price;
 
+                    if (brokerage.Count >= brokerage.Stock.Company.NumberOfStocks)
+                    {
+                        brokerage.Stock.Company.NumberOfStocks *= 10;
+                    }
+
+
                     if (brokerage == null)
                     {
                         BrokerageAccount newBrokerAcc = new BrokerageAccount();
@@ -133,7 +139,6 @@ namespace Investment.PagesApp
             {
                 var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
 
-              
 
                 if (brokerage != null)
                 {

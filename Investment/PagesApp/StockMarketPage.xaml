@@ -40,33 +40,33 @@
             <Button x:Name="BtnStocks" Content="Stocks"  Margin="30, 0,30,0" Padding="30, 0, 30, 0"></Button>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Height="30" VerticalAlignment="Top" Orientation="Horizontal" Background="#C7CBD0" Width="1300" Margin="-65, 3, 0, 3">
+        <StackPanel Grid.Row="1" Grid.Column="1"  Height="30" Orientation="Horizontal" VerticalAlignment="Top" Background="#C7CBD0" Width="1350" Margin="-20, 0, 0, 3">
 
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Logo" Width="70" FontSize="15" Padding="25 , 0, 0, 0"/>
+            <StackPanel VerticalAlignment="Center" Width="500"   Margin="20 , 0, 0, 0">
+                <TextBlock Text="Название" FontSize="15"/>
             </StackPanel>
 
-            <StackPanel VerticalAlignment="Center" Width="300"   Margin="20 , 0, 0, 0">
-                <TextBlock Text="Short name" FontSize="15"/>
+            <StackPanel VerticalAlignment="Center" Width="100"   Margin="320 , 0, 0, 0">
+                <TextBlock Text="Кол-во акций" FontSize="15"/>
             </StackPanel>
 
-            <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="600">
-                <TextBlock Text="Price" FontSize="15" TextAlignment="Right"/>
+            <StackPanel VerticalAlignment="Center" Margin="60, 0, 0,0" Width="100">
+                <TextBlock Text="Цена" FontSize="15" TextAlignment="Right"/>
             </StackPanel>
 
-            <StackPanel VerticalAlignment="Center"  Margin="10, 0, 0,0" Width="150">
-                <TextBlock Text="Price in %" FontSize="15" TextAlignment="Right"/>
+            <StackPanel VerticalAlignment="Center"  Margin="80, 0, 0,0" Width="150">
+                <TextBlock Text="За все время" FontSize="15" TextAlignment="Right"/>
             </StackPanel>
 
         </StackPanel>
 
 
         <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="0, 30, 0, 0">
-            <StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <ListView x:Name="listTemplate" SelectionChanged="listTemplate_Selected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Background="#DADFE4" Width="1300" Margin="0, 3, 0, 3">
+                            <StackPanel Orientation="Horizontal" Background="#DADFE4" Width="1200" Margin="0, 3, 0, 3">
                                 <StackPanel>
                                     <Image Source="{Binding Company.ImageLogo}" Width="70" Margin="5"/>
                                 </StackPanel>
@@ -75,19 +75,68 @@
                                     <TextBlock Text="{Binding Company.Name}" FontSize="17"/>
                                     <TextBlock Text="{Binding Company.ShortName}" FontSize="12" Margin="0, 2, 0, 8"/>
                                 </StackPanel>
-                                
-                                <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="600">
-                                    <TextBlock Text="{Binding Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+
+                                <StackPanel VerticalAlignment="Center" Margin="400, 0, 0,0" Width="100">
+                                    <TextBlock Text="{Binding Company.NumberOfStocks, StringFormat='{}{0} шт.'}" FontSize="15" TextAlignment="Right"/>
                                 </StackPanel>
 
-                                <StackPanel VerticalAlignment="Center"  Margin="10, 0, 0,0" Width="150">
-                                    <TextBlock Text="51,38%" FontSize="15" TextAlignment="Right"/>
+                                <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="100">
+                                    <TextBlock Text="{Binding Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
                                 </StackPanel>
 
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                <ListView x:Name="listTemplate2">
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Background="#DADFE4" Height="80" Width="150" Margin="-10, 3, 0, 3" >
+
+                                <StackPanel VerticalAlignment="Center"  Width="100" Orientation="Horizontal" Margin="10, 3, 0, 0">
+
+
+                                    <StackPanel VerticalAlignment="Center" Margin="0, 0, 0,0" Width="100">
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock x:Name="TxtPriceCompany" Text="{Binding Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                            <TextBlock x:Name="TxtProcentCompany" Text="{Binding Procent, StringFormat='{}{0} %'}" FontSize="15" TextAlignment="Right"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </StackPanel>
+
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding PlusOrMinus}" Value="-">
+                                    <Setter TargetName="TxtPriceCompany" Property="Foreground" Value="Red" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding PlusOrMinus}" Value="+">
+                                    <Setter TargetName="TxtPriceCompany" Property="Foreground" Value="Green" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding PlusOrMinus}" Value="-">
+                                    <Setter TargetName="TxtProcentCompany" Property="Foreground" Value="Red" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding PlusOrMinus}" Value="+">
+                                    <Setter TargetName="TxtProcentCompany" Property="Foreground" Value="Green" />
+                                </DataTrigger>
+
+                            </DataTemplate.Triggers>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
             </StackPanel>
         </ScrollViewer>
         
