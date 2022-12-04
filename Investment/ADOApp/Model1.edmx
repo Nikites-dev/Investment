@@ -34,7 +34,7 @@
           <Property Name="ImageLogo" Type="image" />
           <Property Name="IdSector" Type="int" />
           <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Info" Type="nvarchar" MaxLength="450" />
+          <Property Name="Info" Type="text" />
         </EntityType>
         <EntityType Name="Dividents">
           <Key>
@@ -284,7 +284,7 @@
           <Property Name="ImageLogo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="IdSector" Type="Int32" />
           <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Info" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Sector" Relationship="InvestmentModel.FK_Company_Sector" FromRole="Company" ToRole="Sector" />
           <NavigationProperty Name="Dividents" Relationship="InvestmentModel.FK_Dividents_Company" FromRole="Company" ToRole="Dividents" />
           <NavigationProperty Name="Stock" Relationship="InvestmentModel.FK_Stock_Company" FromRole="Company" ToRole="Stock" />
@@ -431,7 +431,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

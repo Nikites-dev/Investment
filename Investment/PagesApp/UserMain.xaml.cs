@@ -51,7 +51,6 @@ namespace Investment.PagesApp
 
         public void SetLoopData()
         {
-
             while(true)
             {
                 try
@@ -159,7 +158,7 @@ namespace Investment.PagesApp
 
                 double marg = (double)(UserCurrent.Balance + sumStocks - 10000);
                 double amount = (double)(UserCurrent.Balance + sumStocks);
-                TxtProfit.Text = (marg).ToString() + "р. " + Math.Truncate(Math.Abs((double)(marg * 100 / (amount - marg))) * 100) / 100 + "%";
+                TxtProfit.Text = (marg).ToString() + " р. (" + Math.Truncate(Math.Abs((double)(marg * 100 / (amount - marg))) * 100) / 100 + "%)";
 
                 if(marg < 0)
                 {

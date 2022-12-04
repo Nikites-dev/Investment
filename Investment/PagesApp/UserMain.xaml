@@ -35,13 +35,46 @@
 
         <StackPanel
             Orientation="Horizontal"
-            Height="30"
+            Height="40"
             HorizontalAlignment="Right"
             Grid.Column="1"
             VerticalAlignment="Center"
             >
-            <Button x:Name="BtnMain" Content="Main" Margin="30, 0,30,0" Padding="30, 0, 30, 0"></Button>
-            <Button x:Name="BtnStocks" Content="Stocks"  Margin="30, 0,30,0" Padding="30, 0, 30, 0" Click="BtnStocks_Click"></Button>
+            <Button x:Name="BtnMain" Content="Портфель" Foreground="White" Background="#333333" Margin="30, 0,30,0" Padding="30, 1, 30, 1">
+
+                
+                
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </Button.Resources>
+
+                <Button.BorderBrush>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#333333" Offset="0" />
+                        <GradientStop Color="#333333" Offset="1" />
+                    </LinearGradientBrush>
+                </Button.BorderBrush>
+
+            </Button>
+
+            <Button x:Name="BtnStocks" Content="Акции" Foreground="#333333"  Background="White" Margin="30, 0,30,0" Padding="30, 0, 30, 0" Click="BtnStocks_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </Button.Resources>
+
+                <Button.BorderBrush>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#333333" Offset="0" />
+                        <GradientStop Color="#333333" Offset="1" />
+                    </LinearGradientBrush>
+                </Button.BorderBrush>
+            </Button>
+            
+            
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
@@ -98,14 +131,28 @@
             <ScrollViewer Grid.Row="1" Grid.Column="1" Height="640" Background="LightBlue">
                 <StackPanel Orientation="Horizontal">
                     <ListView x:Name="listTemplate" SelectionChanged="listTemplate_SelectionChanged">
-                        
+
+                        <ListView.BorderBrush>
+                            <LinearGradientBrush>
+                                <GradientStop Color="White" Offset="0" />
+                                <GradientStop Color="White" Offset="1" />
+                            </LinearGradientBrush>
+                        </ListView.BorderBrush>
+
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Background="#DADFE4" Width="800"  Margin="0, 3, -10, 0">
-                                    <StackPanel>
-                                        <Image Source="{Binding Stock.Company.ImageLogo}" Width="70" Margin="5"/>
-                                    </StackPanel>
 
+                                 
+                                        <StackPanel>
+
+                                        <Image Source="{Binding Stock.Company.ImageLogo}" Width="70" Margin="5"/>
+
+
+
+                                    </StackPanel>
+                                 
+                                    
                                     <StackPanel VerticalAlignment="Center" Width="400"   Margin="20 , 0, 0, 0">
                                         <TextBlock Text="{Binding Stock.Company.Name}" FontSize="17"/>
                                         <TextBlock Text="{Binding Stock.Company.ShortName}" FontSize="12" Margin="0, 2, 0, 8"/>
@@ -125,6 +172,13 @@
 
                     <ListView x:Name="listTemplate2">
 
+                        <ListView.BorderBrush>
+                            <LinearGradientBrush>
+                                <GradientStop Color="White" Offset="0" />
+                                <GradientStop Color="White" Offset="1" />
+                            </LinearGradientBrush>
+                        </ListView.BorderBrush> 
+                        
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="Focusable" Value="False"/>
@@ -176,6 +230,8 @@
                                         <Setter TargetName="TxtProcent" Property="Foreground" Value="#50C878" />
                                     </DataTrigger>
 
+                                    
+                                    
                                 </DataTemplate.Triggers>
 
                             </DataTemplate>
