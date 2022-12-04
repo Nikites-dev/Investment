@@ -12,6 +12,10 @@ namespace Investment.Models
 
         public double Procent { get; set; }
 
+        public double ProcentOfCompany { get; set; }
+
+        public int Amount { get; set; }
+
         public String PlusOrMinus { get; set; }
     }
 }

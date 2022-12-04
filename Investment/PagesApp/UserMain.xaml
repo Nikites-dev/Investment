@@ -96,25 +96,22 @@
                         
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Background="#DADFE4" Width="1250"  Margin="0, 3, -10, 0">
+                                <StackPanel Orientation="Horizontal" Background="#DADFE4" Width="800"  Margin="0, 3, -10, 0">
                                     <StackPanel>
                                         <Image Source="{Binding Stock.Company.ImageLogo}" Width="70" Margin="5"/>
                                     </StackPanel>
 
-                                    <StackPanel VerticalAlignment="Center" Width="300"   Margin="20 , 0, 0, 0">
+                                    <StackPanel VerticalAlignment="Center" Width="400"   Margin="20 , 0, 0, 0">
                                         <TextBlock Text="{Binding Stock.Company.Name}" FontSize="17"/>
                                         <TextBlock Text="{Binding Stock.Company.ShortName}" FontSize="12" Margin="0, 2, 0, 8"/>
                                     </StackPanel>
 
-                                    <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="600">
+                                    <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="100">
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock Text="{Binding Stock.Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
                                             <TextBlock Text="{Binding Count, StringFormat='{}{0} шт.'}" FontSize="15" TextAlignment="Right" Margin="0, 3, 0, 3"/>
                                         </StackPanel>
                                     </StackPanel>
-
-
-                                  
 
                                 </StackPanel>
                             </DataTemplate>
@@ -131,22 +128,29 @@
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Background="#DADFE4" Height="80" Width="100" Margin="-10, 3, 0, 0">
+                                <StackPanel Orientation="Horizontal" Background="#DADFE4" Height="80" Width="550" Margin="-10, 3, 0, 0" >
 
-                                    <StackPanel VerticalAlignment="Center"  Width="100">
-                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-
+                                    <StackPanel VerticalAlignment="Center"  Width="500" Orientation="Horizontal" Margin="43, 3, 0, 0">
 
 
-                                            <TextBlock x:Name="TxtPrice" Text="{Binding Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                        <StackPanel VerticalAlignment="Center" Margin="10, 0, 0,0" Width="50">
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="{Binding ProcentOfCompany, StringFormat='{}{0} %'}" FontSize="15" TextAlignment="Right"/>
+                                            </StackPanel>
+                                        </StackPanel>
 
 
-
-                                            <TextBlock x:Name="TxtProcent"  Text="{Binding Procent, StringFormat='{}{0}%'}" FontSize="15" TextAlignment="Right" />
+                                        <StackPanel VerticalAlignment="Center" Margin="140, 0, 0,0" Width="50">
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="{Binding Amount, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                            </StackPanel>
                                         </StackPanel>
                                         
-                                        
-                                        
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center"  Margin="150, 0, 0, 0">
+                                            <TextBlock x:Name="TxtPrice" Text="{Binding Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                            <TextBlock x:Name="TxtProcent"  Text="{Binding Procent, StringFormat='{}{0}%'}" FontSize="15" TextAlignment="Right" />
+                                        </StackPanel>
+ 
                                     </StackPanel>
                                 </StackPanel>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -29,9 +30,6 @@ namespace Investment.PagesApp
         public UserMain()
         {
             InitializeComponent();
-
-  
-
 
             SetData();
 
@@ -70,7 +68,15 @@ namespace Investment.PagesApp
                 }
 
                 Dispatcher.Invoke(() => listTemplate.ItemsSource = listStock);
-                Dispatcher.Invoke(() => listTemplate2.ItemsSource = CalculateProfit());
+                try
+                {
+                    Dispatcher.Invoke(() => listTemplate2.ItemsSource = CalculateProfit());
+                } catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                
+                Dispatcher.Invoke(() => SetData());
 
                 Thread.Sleep(10000);
             }
@@ -78,6 +84,8 @@ namespace Investment.PagesApp
 
         public List<Profit> CalculateProfit()
         {
+            if (App.Connection != null)
+            {
                 List<Stock> listStocks = App.Connection.Stock.ToList();
                 var listStockDB = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
 
@@ -89,22 +97,38 @@ namespace Investment.PagesApp
                     {
                         Profit profit = new Profit();
 
-                       double margin = (double)(item.Count * item.Stock.Price - item.Amount);
-                       profit.Price = (int)margin;
-                       profit.Procent = Math.Truncate(Math.Abs((double)(margin * 100 / (item.Amount - margin))) * 100) / 100;
-                       
-                    if(profit.Price < 0)
-                    {
-                        profit.PlusOrMinus = "-";
-                    } else
-                    {
-                        profit.PlusOrMinus = "+";
-                    }
-                 
+                        double margin = (double)(item.Count * item.Stock.Price - item.Amount);
+                        profit.Price = (int)margin;
+                        profit.Procent = Math.Truncate(Math.Abs((double)(margin * 100 / (item.Amount - margin))) * 100) / 100;
+                        profit.Amount = (int)(item.Count * item.Stock.Price);
+
+                        try
+                        {
+                            profit.ProcentOfCompany = Math.Truncate(Math.Abs((double)(item.Count * 100 / (item.Stock.Company.NumberOfStocks))) * 100) / 100;
+                        } catch
+                        {
+                            profit.ProcentOfCompany = 0;
+                        }
+                    
+
+                        if (profit.Price < 0)
+                        {
+                            profit.PlusOrMinus = "-";
+                        }
+                        else
+                        {
+                            profit.PlusOrMinus = "+";
+                        }
+
                         listProfits.Add(profit);
                     }
                 }
-        return listProfits;
+                return listProfits;
+            }
+            else
+            {
+                return null;
+            }  
         }
 
         private void BtnStocks_Click(object sender, RoutedEventArgs e)
@@ -128,6 +152,19 @@ namespace Investment.PagesApp
                 }
 
                 TxtBank.Text = (UserCurrent.Balance + sumStocks).ToString();
+
+                double marg = (double)(UserCurrent.Balance + sumStocks - 10000);
+                double amount = (double)(UserCurrent.Balance + sumStocks);
+                TxtProfit.Text = (marg).ToString() + "р. " + Math.Truncate(Math.Abs((double)(marg * 100 / (amount - marg))) * 100) / 100 + "%";
+
+                if(marg < 0)
+                {
+                    TxtProfit.Foreground = Brushes.Red;
+                } else
+                {
+                    TxtProfit.Foreground = Brushes.Green;
+                }
+
             } else
             {
                 TxtBank.Text = UserCurrent.Balance.ToString();
