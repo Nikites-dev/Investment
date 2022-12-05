@@ -70,28 +70,29 @@
             </Button>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="1"  Height="30" Orientation="Horizontal" VerticalAlignment="Top" Background="#C7CBD0" Width="1350" Margin="-20, 0, 0, 3">
+        <Border Margin="-20, 0, 0, 3" Background="#333333" CornerRadius="5,5,0,0" Width="1350"  Grid.Row="1" Grid.Column="1">
+            <StackPanel Grid.Row="1" Grid.Column="1"  Height="30" Orientation="Horizontal" VerticalAlignment="Top"  Width="1350">
 
-            <StackPanel VerticalAlignment="Center" Width="500"   Margin="20 , 0, 0, 0">
-                <TextBlock Text="Название" FontSize="15"/>
+                <StackPanel VerticalAlignment="Center" Width="500"   Margin="20 , 0, 0, 0">
+                    <TextBlock Text="Название" FontSize="15" Foreground="#DEDEDE"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center" Width="100"   Margin="320 , 0, 0, 0">
+                    <TextBlock Text="Кол-во акций" FontSize="15" Foreground="#DEDEDE"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center" Margin="60, 0, 0,0" Width="100">
+                    <TextBlock Text="Цена" FontSize="15" TextAlignment="Right" Foreground="#DEDEDE"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center"  Margin="80, 0, 0,0" Width="150">
+                    <TextBlock Text="За все время" FontSize="15" TextAlignment="Right" Foreground="#DEDEDE"/>
+                </StackPanel>
+
             </StackPanel>
+        </Border>
 
-            <StackPanel VerticalAlignment="Center" Width="100"   Margin="320 , 0, 0, 0">
-                <TextBlock Text="Кол-во акций" FontSize="15"/>
-            </StackPanel>
-
-            <StackPanel VerticalAlignment="Center" Margin="60, 0, 0,0" Width="100">
-                <TextBlock Text="Цена" FontSize="15" TextAlignment="Right"/>
-            </StackPanel>
-
-            <StackPanel VerticalAlignment="Center"  Margin="80, 0, 0,0" Width="150">
-                <TextBlock Text="За все время" FontSize="15" TextAlignment="Right"/>
-            </StackPanel>
-
-        </StackPanel>
-
-
-        <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="0, 30, 0, 0">
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="0, 30, 0, 0" Background="#333333">
             <StackPanel Orientation="Horizontal">
                 <ListView x:Name="listTemplate" SelectionChanged="listTemplate_Selected">
 
@@ -119,7 +120,7 @@
                                 </StackPanel>
 
                                 <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="100">
-                                    <TextBlock Text="{Binding Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                    <TextBlock Text="{Binding Price, StringFormat='{}{0} ₽'}" FontSize="15" TextAlignment="Right"/>
                                 </StackPanel>
 
                             </StackPanel>
@@ -151,7 +152,7 @@
 
                                     <StackPanel VerticalAlignment="Center" Margin="0, 0, 0,0" Width="100">
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock x:Name="TxtPriceCompany" Text="{Binding Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                            <TextBlock x:Name="TxtPriceCompany" Text="{Binding Price, StringFormat='{}{0} ₽'}" FontSize="15" TextAlignment="Right"/>
                                             <TextBlock x:Name="TxtProcentCompany" Text="{Binding Procent, StringFormat='{}{0} %'}" FontSize="15" TextAlignment="Right"/>
                                         </StackPanel>
                                     </StackPanel>
@@ -165,7 +166,7 @@
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding PlusOrMinus}" Value="+">
-                                    <Setter TargetName="TxtPriceCompany" Property="Foreground" Value="Green" />
+                                    <Setter TargetName="TxtPriceCompany" Property="Foreground" Value="#00B533" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding PlusOrMinus}" Value="-">
@@ -173,7 +174,7 @@
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding PlusOrMinus}" Value="+">
-                                    <Setter TargetName="TxtProcentCompany" Property="Foreground" Value="Green" />
+                                    <Setter TargetName="TxtProcentCompany" Property="Foreground" Value="#00B533" />
                                 </DataTrigger>
 
                             </DataTemplate.Triggers>

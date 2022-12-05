@@ -105,6 +105,9 @@
     <Compile Include="ADOApp\StockMarket.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ADOApp\sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="ADOApp\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

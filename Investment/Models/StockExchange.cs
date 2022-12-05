@@ -17,27 +17,6 @@ namespace Investment.Models
             List<StockMarket> stockMarkets = App.Connection.StockMarket.ToList();
             List<Stock> listStocks = App.Connection.Stock.ToList();
 
-
-
-
-            //var lastStock = App.Connection.StockMarket.Where(x => x.IdStock == 3).ToList().LastOrDefault();
-
-
-
-            //if (lastStock.LastTransaction > 35000 && lastStock.LastTransaction < 45000)
-            //{
-            //    StockMarket stockMarket = new StockMarket();
-
-            //    stockMarket.IdStock = 3;
-
-
-            //    stockMarket.LastTransaction = GeneratePrice((int)lastStock.LastTransaction, random);
-
-            //    App.Connection.StockMarket.Add(stockMarket);
-            //    App.Connection.SaveChanges();
-            //}
-
-
             foreach (var stock in listStocks)
             {
                 var lastStock = App.Connection.StockMarket.Where(x => x.IdStock == stock.IdStock).ToList().LastOrDefault();

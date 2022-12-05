@@ -141,7 +141,7 @@ namespace Investment.PagesApp
 
         public void SetData()
         {
-            TxtBalance.Text = UserCurrent.Balance.ToString();
+            TxtBalance.Text = UserCurrent.Balance.ToString() + " ₽";
 
             var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser).ToList();
 
@@ -154,18 +154,19 @@ namespace Investment.PagesApp
                     sumStocks += (int)(stock.Stock.Price * stock.Count);
                 }
 
-                TxtBank.Text = (UserCurrent.Balance + sumStocks).ToString();
+                TxtBank.Text = (UserCurrent.Balance + sumStocks).ToString() + " ₽"; ;
 
                 double marg = (double)(UserCurrent.Balance + sumStocks - 10000);
                 double amount = (double)(UserCurrent.Balance + sumStocks);
-                TxtProfit.Text = (marg).ToString() + " р. (" + Math.Truncate(Math.Abs((double)(marg * 100 / (amount - marg))) * 100) / 100 + "%)";
+                TxtProfit.Text = (marg).ToString() + " ₽ (" + Math.Truncate(Math.Abs((double)(marg * 100 / (amount - marg))) * 100) / 100 + "%)";
 
                 if(marg < 0)
                 {
                     TxtProfit.Foreground = Brushes.Red;
                 } else
                 {
-                    TxtProfit.Foreground = Brushes.Green;
+                    var bc = new BrushConverter();
+                    TxtProfit.Foreground = (Brush)bc.ConvertFrom("#0FA63A");
                 }
 
             } else

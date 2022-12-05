@@ -71,8 +71,6 @@ namespace Investment.PagesApp
                     {
                         profit.PlusOrMinus = "+";
                     }
-
-
                     listProfits.Add(profit);
                 }
 

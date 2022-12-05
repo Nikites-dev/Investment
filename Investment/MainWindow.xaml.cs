@@ -35,7 +35,7 @@ namespace Investment
 
  
 
-            MainFrame.NavigationService.Navigate(new SignUp());
+            MainFrame.NavigationService.Navigate(new SignIn());
 
             Thread thread = new Thread(Next) { IsBackground = true };
             thread.Start();

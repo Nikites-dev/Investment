@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Investment.ADOApp;
 using Investment.Models;
+using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 
 namespace Investment.PagesApp
@@ -45,6 +46,9 @@ namespace Investment.PagesApp
         public void SetLoopData()
         {
             StockMarket stockMarket;
+
+            var bc = new BrushConverter();
+
             while (true)
             {
                 var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
@@ -65,16 +69,17 @@ namespace Investment.PagesApp
 
 
                     // Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " | " + procentPorfel + "%");
-                    Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " р. (" + procentPorfel + "%)");
+                    Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " ₽ (" + procentPorfel + "%)");
 
                     Dispatcher.Invoke(() => TxtProcentCommon.Text = (Math.Truncate(Math.Abs((double)(margin * 100 / (StockCurrent.Price - margin))) * 100) / 100).ToString() + "%");
 
+                    
 
                     if (margin < 0) { Dispatcher.Invoke(() => TxtProcentCommon.Foreground = Brushes.Red); }
-                    else { Dispatcher.Invoke(() => TxtProcentCommon.Foreground = Brushes.Green); }
+                    else { Dispatcher.Invoke(() => TxtProcentCommon.Foreground = (Brush)bc.ConvertFrom("#0FA63A")); }
 
                     if (marginPortfel < 0) { Dispatcher.Invoke(() => TxtProcentInPortfel.Foreground = Brushes.Red); }
-                    else { Dispatcher.Invoke(() => TxtProcentInPortfel.Foreground = Brushes.Green); }
+                    else { Dispatcher.Invoke(() => TxtProcentInPortfel.Foreground = (Brush)bc.ConvertFrom("#0FA63A")); }
 
                     Dispatcher.Invoke(() => SetData());
                 }
@@ -87,11 +92,11 @@ namespace Investment.PagesApp
 
         public void SetData()
         {
-            TxtBalance.Text = UserCurrent.Balance.ToString() + " р.";
+            TxtBalance.Text = UserCurrent.Balance.ToString() + " ₽";
             TxtName.Text = StockCurrent.Company.Name;
             TxtShortName.Text = StockCurrent.Company.ShortName;
             TxtSector.Text = StockCurrent.Company.Sector.NameSector;
-            TxtPrice.Text = StockCurrent.Price.ToString() + " р.";
+            TxtPrice.Text = StockCurrent.Price.ToString() + " ₽";
             TxtInfo.Text = StockCurrent.Company.Info;
             TxtCount.Text = StockCurrent.Company.NumberOfStocks.ToString() + " шт.";
 
@@ -100,26 +105,21 @@ namespace Investment.PagesApp
 
             BrokerageAccount brokerage = null;
 
-            try
-            {
-                brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
-            } catch (Exception ex)
-            {
-                
-            }
-           
+            brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
 
-            if(brokerage == null)
+
+            if (brokerage == null)
             {
                 TxtCountInPortfel.Text = "0 шт.";
-                TxtPriceInPortfel.Text = "0 р.";
-                TxtProcentInPortfel.Text = "0 ";
+                TxtPriceInPortfel.Text = "0 ₽";
+                TxtProcentInPortfel.Text = "0";
             }else
             {
                 int sumStocks = (int)(brokerage.Stock.Price * brokerage.Count);
         
                 TxtCountInPortfel.Text = $"{brokerage.Count} шт.";
-                TxtPriceInPortfel.Text = $"{sumStocks} р.";
+                TxtPriceInPortfel.Text = $"{sumStocks} ₽";
+        
             }
         }
 
@@ -159,7 +159,7 @@ namespace Investment.PagesApp
                     {
                     
 
-                        if (brokerage.Count >= brokerage.Stock.Company.NumberOfStocks)
+                        if (brokerage.Count > brokerage.Stock.Company.NumberOfStocks)
                         {
                             brokerage.Stock.Company.NumberOfStocks *= 10;
                         }
@@ -169,7 +169,7 @@ namespace Investment.PagesApp
                     }
                     App.Connection.SaveChanges();
                     SetData();
-                    MessageBox.Show("SUCCES!");
+                    MessageBox.Show($"Куплено: {EdAmount.Text} акций, на сумму {int.Parse(EdAmount.Text) * StockCurrent.Price} ₽.  ({StockCurrent.Price} ₽ за 1 шт.)", "Пополнение", MessageBoxButton.OK, MessageBoxImage.Information);
                 } 
                 else
                 {
@@ -201,7 +201,7 @@ namespace Investment.PagesApp
                         brokerage.Count -= int.Parse(EdAmount.Text);
                         brokerage.Amount -= int.Parse(EdAmount.Text) * StockCurrent.Price;
 
-                        MessageBox.Show("SUCCES!");
+                        MessageBox.Show($"Продано: {EdAmount.Text} акций, на сумму {int.Parse(EdAmount.Text) * StockCurrent.Price} ₽.  ({StockCurrent.Price} ₽ за 1 шт.)", "Продажа", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
                     if(brokerage.Count == 0)

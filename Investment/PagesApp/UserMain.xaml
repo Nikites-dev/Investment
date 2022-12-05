@@ -91,7 +91,7 @@
                 </StackPanel>
 
                 <StackPanel Margin="500, 0, 0, 0">
-                    <TextBlock  Text="За все время:" FontSize="16"/>
+                    <TextBlock  Text="За все время" FontSize="16"/>
                     <TextBlock x:Name="TxtProfit"   FontSize="20" FontWeight="Bold"/>
                 </StackPanel>
 
@@ -100,35 +100,35 @@
 
 
 
+            <Border Margin="-20, 50, 0, 3" Background="#333333" CornerRadius="5,5,0,0" Width="1350">
+                <StackPanel Grid.Row="1" Grid.Column="1"  Height="30" Orientation="Horizontal" Width="1350" >
 
-            <StackPanel Grid.Row="1" Grid.Column="1"  Height="30" Orientation="Horizontal" Background="#C7CBD0" Width="1350" Margin="-20, 50, 0, 3">
 
-              
 
-                <StackPanel VerticalAlignment="Center" Width="500"   Margin="20 , 0, 0, 0">
-                    <TextBlock Text="Название" FontSize="15"/>
+                    <StackPanel VerticalAlignment="Center" Width="500"   Margin="20 , 0, 0, 0">
+                        <TextBlock Text="Название" FontSize="15" Foreground="#DEDEDE"/>
+                    </StackPanel>
+
+                    <StackPanel VerticalAlignment="Center" Margin="80, 0, 0,0" Width="100">
+                        <TextBlock Text="Цена" FontSize="15" TextAlignment="Right" Foreground="#DEDEDE"/>
+                    </StackPanel>
+
+                    <StackPanel VerticalAlignment="Center" Margin="120, 0, 0,0" Width="100">
+                        <TextBlock Text="Владение" FontSize="15" TextAlignment="Right" Foreground="#DEDEDE"/>
+                    </StackPanel>
+
+                    <StackPanel VerticalAlignment="Center"  Margin="50, 0, 0,0" Width="150">
+                        <TextBlock Text="Стоимость" FontSize="15" TextAlignment="Right" Foreground="#DEDEDE"/>
+                    </StackPanel>
+
+                    <StackPanel VerticalAlignment="Center"  Margin="60, 0, 0,0" Width="150">
+                        <TextBlock Text="За все время" FontSize="15" TextAlignment="Right" Foreground="#DEDEDE"/>
+                    </StackPanel>
                 </StackPanel>
-
-                <StackPanel VerticalAlignment="Center" Margin="80, 0, 0,0" Width="100">
-                    <TextBlock Text="Цена" FontSize="15" TextAlignment="Right"/>
-                </StackPanel>
-
-                <StackPanel VerticalAlignment="Center" Margin="120, 0, 0,0" Width="100">
-                    <TextBlock Text="Владение" FontSize="15" TextAlignment="Right"/>
-                </StackPanel>
-
-                <StackPanel VerticalAlignment="Center"  Margin="50, 0, 0,0" Width="150">
-                    <TextBlock Text="Стоимость" FontSize="15" TextAlignment="Right"/>
-                </StackPanel>
-
-                <StackPanel VerticalAlignment="Center"  Margin="60, 0, 0,0" Width="150">
-                    <TextBlock Text="За все время" FontSize="15" TextAlignment="Right"/>
-                </StackPanel>
-            </StackPanel>
+            </Border>
 
 
-
-            <ScrollViewer Grid.Row="1" Grid.Column="1" Height="640" Background="LightBlue">
+            <ScrollViewer Grid.Row="1" Grid.Column="1" Height="640" Background="#333333">
                 <StackPanel Orientation="Horizontal">
                     <ListView x:Name="listTemplate" SelectionChanged="listTemplate_SelectionChanged">
 
@@ -155,13 +155,13 @@
                                     
                                     <StackPanel VerticalAlignment="Center" Width="400"   Margin="20 , 0, 0, 0">
                                         <TextBlock Text="{Binding Stock.Company.Name}" FontSize="17"/>
-                                        <TextBlock Text="{Binding Stock.Company.ShortName}" FontSize="12" Margin="0, 2, 0, 8"/>
+                                        <TextBlock Text="{Binding Stock.Company.ShortName}" FontSize="12" Margin="0, 2, 0, 8" Foreground="#6E7F80"/>
                                     </StackPanel>
 
                                     <StackPanel VerticalAlignment="Center" Margin="100, 0, 0,0" Width="100">
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock Text="{Binding Stock.Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
-                                            <TextBlock Text="{Binding Count, StringFormat='{}{0} шт.'}" FontSize="15" TextAlignment="Right" Margin="0, 3, 0, 3"/>
+                                            <TextBlock Text="{Binding Stock.Price, StringFormat='{}{0} ₽'}" FontSize="15" TextAlignment="Right"/>
+                                            <TextBlock Text="{Binding Count, StringFormat='{}{0} шт.'}" FontSize="15" TextAlignment="Right" Margin="0, 3, 0, 3" Foreground="#6E7F80"/>
                                         </StackPanel>
                                     </StackPanel>
 
@@ -201,12 +201,12 @@
 
                                         <StackPanel VerticalAlignment="Center" Margin="140, 0, 0,0" Width="70">
                                             <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="{Binding Amount, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                                <TextBlock Text="{Binding Amount, StringFormat='{}{0} ₽'}" FontSize="15" TextAlignment="Right"/>
                                             </StackPanel>
                                         </StackPanel>
                                         
                                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center"  Margin="150, 0, 0, 0">
-                                            <TextBlock x:Name="TxtPrice" Text="{Binding Price, StringFormat='{}{0} р.'}" FontSize="15" TextAlignment="Right"/>
+                                            <TextBlock x:Name="TxtPrice" Text="{Binding Price, StringFormat='{}{0} ₽'}" FontSize="15" TextAlignment="Right"/>
                                             <TextBlock x:Name="TxtProcent"  Text="{Binding Procent, StringFormat='{}{0}%'}" FontSize="15" TextAlignment="Right" />
                                         </StackPanel>
  
@@ -219,7 +219,7 @@
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding PlusOrMinus}" Value="+">
-                                        <Setter TargetName="TxtPrice" Property="Foreground" Value="#50C878" />
+                                        <Setter TargetName="TxtPrice" Property="Foreground" Value="#00B533"/>
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding PlusOrMinus}" Value="-">
@@ -227,11 +227,9 @@
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding PlusOrMinus}" Value="+">
-                                        <Setter TargetName="TxtProcent" Property="Foreground" Value="#50C878" />
+                                        <Setter TargetName="TxtProcent" Property="Foreground" Value="#00B533" />
                                     </DataTrigger>
 
-                                    
-                                    
                                 </DataTemplate.Triggers>
 
                             </DataTemplate>

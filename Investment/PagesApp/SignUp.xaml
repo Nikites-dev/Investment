@@ -28,20 +28,42 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBlock Text="Sign in" HorizontalAlignment="Center"></TextBlock>
-            
-            <TextBlock Text="Name"></TextBlock>
-            <TextBox x:Name="EdName"></TextBox>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="200, 30, 200, 30" VerticalAlignment="Top">
+            <TextBlock Text="Sign up" HorizontalAlignment="Center" FontSize="30" FontWeight="Light"></TextBlock>
 
-            <TextBlock Text="Login"></TextBlock>
-            <TextBox x:Name="EdLogin"></TextBox>
-            
-            <TextBlock Text="Password"></TextBlock>
-            <PasswordBox x:Name="EdPassword"></PasswordBox>
+            <TextBlock Text="Name" Style="{StaticResource txtBlock}"></TextBlock>
+            <TextBox x:Name="EdName" Style="{StaticResource EdBox}">
 
-            <Button x:Name="BtnSignUp" Content="Sign Up" Click="BtnSignUp_Click"></Button>
-            <Button x:Name="BtnSignIn" Content="Sign In" Background="White" Click="BtnSignIn_Click"></Button>
+                <TextBox.BorderBrush>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#333333" Offset="0" />
+                        <GradientStop Color="#333333" Offset="1" />
+                    </LinearGradientBrush>
+                </TextBox.BorderBrush>
+            </TextBox>
+
+            <TextBlock Text="Login" Style="{StaticResource txtBlock}"></TextBlock>
+            <TextBox x:Name="EdLogin" Style="{StaticResource EdBox}">
+                <TextBox.BorderBrush>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#333333" Offset="0" />
+                        <GradientStop Color="#333333" Offset="1" />
+                    </LinearGradientBrush>
+                </TextBox.BorderBrush>
+            </TextBox>
+
+            <TextBlock Text="Password" Style="{StaticResource txtBlock}"></TextBlock>
+            <PasswordBox x:Name="EdPassword" Style="{StaticResource EdPas}"></PasswordBox>
+
+            <Button x:Name="BtnSignUp" Content="Sign Up" Click="BtnSignUp_Click" Style="{StaticResource BtnSign1}">
+                <Button.BorderBrush>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#FEDC2D" Offset="0" />
+                        <GradientStop Color="#FEDC2D" Offset="1" />
+                    </LinearGradientBrush>
+                </Button.BorderBrush>
+            </Button>
+            <Button x:Name="BtnSignIn" Content="Sign in 🡢" Click="BtnSignIn_Click" Style="{StaticResource BtnSign2}" RenderTransformOrigin="0.696,-0.737"></Button>
             
         </StackPanel>
         
