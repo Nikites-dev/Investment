@@ -47,34 +47,40 @@ namespace Investment.PagesApp
             StockMarket stockMarket;
             while (true)
             {
-             
+                var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
+
+                if(brokerage != null)
+                {
                     stockMarket = App.Connection.StockMarket.Where(x => x.IdStock == StockCurrent.IdStock).FirstOrDefault();
                     double margin = (double)(StockCurrent.Price - stockMarket.LastTransaction);
 
-                var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
-
-                double marginPortfel = (double)(brokerage.Count * brokerage.Stock.Price - brokerage.Amount);
-                var procentPorfel = Math.Truncate(Math.Abs((double)(marginPortfel * 100 / (brokerage.Amount - marginPortfel))) * 100) / 100;
 
 
+                    double marginPortfel = (double)(brokerage.Count * brokerage.Stock.Price - brokerage.Amount);
+                    var procentPorfel = Math.Truncate(Math.Abs((double)(marginPortfel * 100 / (brokerage.Amount - marginPortfel))) * 100) / 100;
 
 
 
 
-                // Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " | " + procentPorfel + "%");
-                Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " р. (" + procentPorfel + "%)");
-
-                Dispatcher.Invoke(() => TxtProcentCommon.Text = (Math.Truncate(Math.Abs((double)(margin * 100 / (StockCurrent.Price - margin))) * 100) / 100).ToString() + "%");
 
 
-                if (margin < 0) { Dispatcher.Invoke(() => TxtProcentCommon.Foreground = Brushes.Red); }
-                else { Dispatcher.Invoke(() => TxtProcentCommon.Foreground = Brushes.Green); }
+                    // Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " | " + procentPorfel + "%");
+                    Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " р. (" + procentPorfel + "%)");
 
-                if (marginPortfel < 0) { Dispatcher.Invoke(() => TxtProcentInPortfel.Foreground = Brushes.Red); }
-                else { Dispatcher.Invoke(() => TxtProcentInPortfel.Foreground = Brushes.Green); }
+                    Dispatcher.Invoke(() => TxtProcentCommon.Text = (Math.Truncate(Math.Abs((double)(margin * 100 / (StockCurrent.Price - margin))) * 100) / 100).ToString() + "%");
 
-                Dispatcher.Invoke(() => SetData());
 
+                    if (margin < 0) { Dispatcher.Invoke(() => TxtProcentCommon.Foreground = Brushes.Red); }
+                    else { Dispatcher.Invoke(() => TxtProcentCommon.Foreground = Brushes.Green); }
+
+                    if (marginPortfel < 0) { Dispatcher.Invoke(() => TxtProcentInPortfel.Foreground = Brushes.Red); }
+                    else { Dispatcher.Invoke(() => TxtProcentInPortfel.Foreground = Brushes.Green); }
+
+                    Dispatcher.Invoke(() => SetData());
+                }
+
+             
+            
                  Thread.Sleep(10000);
             }
         }
@@ -132,15 +138,12 @@ namespace Investment.PagesApp
             if (isNumeric)
             {
                 var brokerage = App.Connection.BrokerageAccount.Where(x => x.IdUser == UserCurrent.IdUser && x.IdStock == StockCurrent.IdStock).FirstOrDefault();
-          
+                
+            
+
                 if(int.Parse(EdAmount.Text) * StockCurrent.Price <= UserCurrent.Balance)
                 {
                     UserCurrent.Balance -= int.Parse(EdAmount.Text) * StockCurrent.Price;
-
-                    if (brokerage.Count >= brokerage.Stock.Company.NumberOfStocks)
-                    {
-                        brokerage.Stock.Company.NumberOfStocks *= 10;
-                    }
 
 
                     if (brokerage == null)
@@ -154,6 +157,13 @@ namespace Investment.PagesApp
                     }
                     else
                     {
+                    
+
+                        if (brokerage.Count >= brokerage.Stock.Company.NumberOfStocks)
+                        {
+                            brokerage.Stock.Company.NumberOfStocks *= 10;
+                        }
+
                         brokerage.Count += int.Parse(EdAmount.Text);
                         brokerage.Amount += int.Parse(EdAmount.Text) * StockCurrent.Price;
                     }
