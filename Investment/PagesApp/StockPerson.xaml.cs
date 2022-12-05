@@ -65,7 +65,7 @@ namespace Investment.PagesApp
 
 
                     // Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " | " + procentPorfel + "%");
-                    Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " р. (" + procentPorfel + "%)");
+                    Dispatcher.Invoke(() => TxtProcentInPortfel.Text = marginPortfel + " ₽ (" + procentPorfel + "%)");
 
                     Dispatcher.Invoke(() => TxtProcentCommon.Text = (Math.Truncate(Math.Abs((double)(margin * 100 / (StockCurrent.Price - margin))) * 100) / 100).ToString() + "%");
 
@@ -87,11 +87,11 @@ namespace Investment.PagesApp
 
         public void SetData()
         {
-            TxtBalance.Text = UserCurrent.Balance.ToString() + " р.";
+            TxtBalance.Text = UserCurrent.Balance.ToString() + " ₽";
             TxtName.Text = StockCurrent.Company.Name;
             TxtShortName.Text = StockCurrent.Company.ShortName;
             TxtSector.Text = StockCurrent.Company.Sector.NameSector;
-            TxtPrice.Text = StockCurrent.Price.ToString() + " р.";
+            TxtPrice.Text = StockCurrent.Price.ToString() + " ₽";
             TxtInfo.Text = StockCurrent.Company.Info;
             TxtCount.Text = StockCurrent.Company.NumberOfStocks.ToString() + " шт.";
 
@@ -112,14 +112,14 @@ namespace Investment.PagesApp
             if(brokerage == null)
             {
                 TxtCountInPortfel.Text = "0 шт.";
-                TxtPriceInPortfel.Text = "0 р.";
-                TxtProcentInPortfel.Text = "0 ";
+                TxtPriceInPortfel.Text = "0 ₽";
+                TxtProcentInPortfel.Text = "0";
             }else
             {
                 int sumStocks = (int)(brokerage.Stock.Price * brokerage.Count);
         
                 TxtCountInPortfel.Text = $"{brokerage.Count} шт.";
-                TxtPriceInPortfel.Text = $"{sumStocks} р.";
+                TxtPriceInPortfel.Text = $"{sumStocks} ₽";
             }
         }
 
