@@ -79,7 +79,7 @@
             <Setter Property="Foreground" Value="#333333"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="0, 10, 0, 0"/>
-            <Setter Property="Padding" Value="20, 5, 20, 5"/>
+            <Setter Property="Padding" Value="10, 5, 20, 5"/>
 
             <Style.Resources>
                 <Style TargetType="Border">

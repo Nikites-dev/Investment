@@ -63,7 +63,7 @@
                     </LinearGradientBrush>
                 </Button.BorderBrush>
             </Button>
-            <Button x:Name="BtnSignIn" Content="Sign in 🡢" Click="BtnSignIn_Click" Style="{StaticResource BtnSign2}" RenderTransformOrigin="0.696,-0.737"></Button>
+            <Button x:Name="BtnSignIn" Content="Начать инвестировать" Click="BtnSignIn_Click" Style="{StaticResource BtnSign2}" RenderTransformOrigin="0.696,-0.737"></Button>
             
         </StackPanel>
         
