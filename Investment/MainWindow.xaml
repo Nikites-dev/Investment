@@ -15,7 +15,7 @@
         WindowState="Maximized"
         WindowStyle="ToolWindow"
         
-        Title="MainWindow">
+        Title="Investment">
     <Grid>
         <Frame x:Name="MainFrame"/>
     </Grid>
